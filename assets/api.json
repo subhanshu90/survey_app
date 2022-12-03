@@ -1,0 +1,125 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "category": "General Knowledge",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "What does a milliner make and sell?",
+            "correct_answer": "Hats",
+            "incorrect_answers": [
+                "Shoes",
+                "Belts",
+                "Shirts"
+            ]
+        },
+        {
+            "category": "Entertainment: Film",
+            "type": "multiple",
+            "difficulty": "easy",
+            "question": "This movie contains the quote, &quot;Nobody puts Baby in a corner.&quot;",
+            "correct_answer": "Dirty Dancing",
+            "incorrect_answers": [
+                "Three Men and a Baby",
+                "Ferris Bueller&#039;s Day Off",
+                "Pretty in Pink"
+            ]
+        },
+        {
+            "category": "Geography",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "Which of the following countries does NOT recognize Armenia as an independent country?",
+            "correct_answer": "Pakistan",
+            "incorrect_answers": [
+                "Iran",
+                "Turkey",
+                "Azerbaijan"
+            ]
+        },
+        {
+            "category": "History",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "Which of these countries was NOT a part of the Soviet Union?",
+            "correct_answer": "Afghanistan",
+            "incorrect_answers": [
+                "Turkmenistan",
+                "Kazakhstan",
+                "Uzbekistan"
+            ]
+        },
+        {
+            "category": "Vehicles",
+            "type": "multiple",
+            "difficulty": "easy",
+            "question": "Which car tire manufacturer is famous for its &quot;P Zero&quot; line?",
+            "correct_answer": "Pirelli",
+            "incorrect_answers": [
+                "Goodyear",
+                "Bridgestone",
+                "Michelin"
+            ]
+        },
+        {
+            "category": "Entertainment: Japanese Anime & Manga",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "Aoi Miyamori is the production manager of what anime in &quot;Shirobako&quot;?",
+            "correct_answer": "The Third Aerial Girls Squad",
+            "incorrect_answers": [
+                "Exodus!",
+                "Andes Chucky",
+                "Angel Beats!"
+            ]
+        },
+        {
+            "category": "Entertainment: Video Games",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "In the &quot;Ace Attorney&quot; series, what is the relationship between Apollo Justice and Trucy Wright?",
+            "correct_answer": "They&#039;re half-siblings",
+            "incorrect_answers": [
+                "They&#039;re co-workers",
+                "They&#039;re friends",
+                "They&#039;re both attorneys"
+            ]
+        },
+        {
+            "category": "Entertainment: Music",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "Which Iron Maiden album did the song &quot;Dream of Mirrors&quot; feature in?",
+            "correct_answer": "Brave New World",
+            "incorrect_answers": [
+                "Dance of Death",
+                "A Matter of Life and Death",
+                "Somewhere in Time"
+            ]
+        },
+        {
+            "category": "Entertainment: Music",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "What date is referenced in the 1971 song &quot;September&quot; by Earth, Wind &amp; Fire?",
+            "correct_answer": "21st of September",
+            "incorrect_answers": [
+                "26th of September",
+                "23rd of September",
+                "24th of September"
+            ]
+        },
+        {
+            "category": "Entertainment: Comics",
+            "type": "multiple",
+            "difficulty": "medium",
+            "question": "What is Hellboy&#039;s true name?",
+            "correct_answer": "Anung Un Rama",
+            "incorrect_answers": [
+                "Right Hand of Doom",
+                "Ogdru Jahad",
+                "Azzael"
+            ]
+        }
+    ]
+}

@@ -14,18 +14,16 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   Future<List<MCQ>> fetchQuestions() async {
-    http.Response response = await http
-        .get(Uri.parse('https://opentdb.com/api.php?amount=10&type=multiple'));
-    jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      List<Map> qn = jsonDecode(response.body)['results'];
-      var x = qn.map((e) => MCQ.fromMap(e)).toList();
-      print(x);
-      return x;
-    } else {
-      throw Exception('Failed to load album');
+    final List<MCQ> balerion = [];
+    String json_local =
+        await DefaultAssetBundle.of(context).loadString('assets/api.json');
+    var qn = jsonDecode(json_local)['results'];
+    for (var x in qn) {
+      MCQ kek = MCQ.fromMap(x);
+      balerion.add(kek);
     }
+    print(balerion);
+    return balerion;
   }
 
   @override
@@ -38,7 +36,7 @@ class _LoadingState extends State<Loading> {
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/constants/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/screens/load.dart';
+import 'package:quiz/screens/survey.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -118,7 +119,7 @@ class kard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Loading(),
+                builder: (context) => const Loading (),
               ),
             );
           },
