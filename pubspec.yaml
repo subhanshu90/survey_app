@@ -16,6 +16,8 @@ dependencies:
   google_fonts: ^3.0.1
   syncfusion_flutter_charts: ^20.3.56
   http: ^0.13.5
+  flutter_rating_bar: ^4.0.1
+  firebase_core: ^2.3.0
 
 dev_dependencies:
   flutter_test:

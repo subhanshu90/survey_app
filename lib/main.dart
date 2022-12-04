@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/components/piechart.dart';
-import 'package:quiz/screens/load.dart';
-import 'package:quiz/screens/survey.dart';
 import 'screens/home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(Myapp());
 }
 

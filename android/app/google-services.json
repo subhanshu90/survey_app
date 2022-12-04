@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "620520844342",
+    "project_id": "internsheep-ape",
+    "storage_bucket": "internsheep-ape.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620520844342:android:cbc59e5d7741ca8ad8bc97",
+        "android_client_info": {
+          "package_name": "com.example.quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620520844342-t9cit78nc25dbpvrmvhsggjljpmpiurm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWj2Br0_6RPxbc2HOAQZEr1DTjh23Xg8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620520844342-t9cit78nc25dbpvrmvhsggjljpmpiurm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "620520844342-vtutclmjmokf9ir0f8f1f3lj2at7v7hp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.quiz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
