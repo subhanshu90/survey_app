@@ -74,7 +74,7 @@ class _QuestionsState extends State<Questions> {
               }
 
               widget.controller.nextPage(
-                duration: const Duration(seconds: 2),
+                duration: const Duration(seconds: 1),
                 curve: Curves.fastLinearToSlowEaseIn,
               );
             },

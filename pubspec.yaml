@@ -44,6 +44,11 @@ flutter:
   assets:
     - assets/icons/survey.png
     - assets/icons/feedback.png
+    - assets/icons/1.png
+    - assets/icons/2.png
+    - assets/icons/3.png
+    - assets/icons/4.png
+    - assets/icons/5.png
     - assets/icons/quiz.png
     - assets/api.json
 
