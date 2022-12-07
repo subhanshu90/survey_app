@@ -28,6 +28,7 @@ class _FeedbackState extends State<FeedbackScreen> {
     return Scaffold(
         appBar: AppBar(),
         body: PageView.builder(
+            physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             itemBuilder: (context, index) {
               if (index == que.length) {
