@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz/constants/constants.dart';
+import 'package:quiz/services/points.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Result extends StatelessWidget {
-  final int correct, incorrect, skip;
-  const Result(
-      {super.key,
-      required this.correct,
-      required this.incorrect,
-      required this.skip});
+  const Result({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final int correct = Provider.of<PointsCountProvider>(context).correct;
+    final int incorrect = Provider.of<PointsCountProvider>(context).incorrect;
+    final int skip = Provider.of<PointsCountProvider>(context).skip;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

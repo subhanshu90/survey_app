@@ -1,15 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz/constants/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz/screens/feedback.dart';
 import 'package:quiz/screens/survey.dart';
+import 'package:quiz/services/auth.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+  final String userName =
+      FirebaseAuth.instance.currentUser?.displayName ?? "Guest ";
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            TextButton(
+              onPressed: () =>
+                  Provider.of<AuthServiceProvider>(context).signOut(),
+              child: const Icon(Icons.logout),
+            )
+          ],
+        ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -33,7 +48,7 @@ class Home extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                              text: "Sur",
+                              text: userName,
                               style: GoogleFonts.pacifico(
                                   textStyle:
                                       text(30, FontWeight.w600, Colors.red)))
@@ -48,16 +63,19 @@ class Home extends StatelessWidget {
                   const kard(
                     txt: "Survey",
                     kolor: blueGradient,
+                    destination: Survey(),
                   ),
                   const SizedBox(height: 50),
                   const kard(
                     txt: "Quiz",
                     kolor: orangeGradient,
+                    destination: Survey(),
                   ),
                   const SizedBox(height: 50),
                   const kard(
                     txt: "Feedback",
                     kolor: purpleGradient,
+                    destination: FeedbackScreen(),
                   ),
                 ],
               ),
@@ -99,8 +117,13 @@ class Home extends StatelessWidget {
 class kard extends StatelessWidget {
   final List<Color> kolor;
   final String txt;
-  const kard({Key? key, required this.txt, required this.kolor})
-      : super(key: key);
+  final Widget destination;
+  const kard({
+    Key? key,
+    required this.txt,
+    required this.kolor,
+    required this.destination,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +141,7 @@ class kard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Survey(),
+                builder: (context) => destination,
               ),
             );
           },

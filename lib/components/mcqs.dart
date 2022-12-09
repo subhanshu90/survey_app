@@ -12,10 +12,12 @@ class MCQ {
   }
 
   factory MCQ.fromMap(Map qn) {
+    List<dynamic> op = qn['options'];
+    List<String> option = op.cast<String>();
     return MCQ(
       question: qn['question'],
       correctOption: qn['correct'],
-      options: qn['options'],
+      options: option,
     );
   }
 }
