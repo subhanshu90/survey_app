@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class MCQ {
   final String question;
   final int correctOption;
@@ -14,10 +12,10 @@ class MCQ {
   }
 
   factory MCQ.fromMap(Map qn) {
-    List<String> givenOptions = qn['incorrect_answers'];
-    int corr = Random().nextInt(givenOptions.length);
-    givenOptions.insert(corr, qn['correct_answer']);
     return MCQ(
-        question: qn['question'], correctOption: corr, options: givenOptions);
+      question: qn['question'],
+      correctOption: qn['correct'],
+      options: qn['options'],
+    );
   }
 }

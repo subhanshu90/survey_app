@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/mcqs.dart';
 import 'package:quiz/components/piechart.dart';
+import 'package:quiz/services/fetch.dart';
 import '../components/questions.dart';
 
 const List<String> options = [
@@ -31,8 +35,6 @@ class Survey extends StatefulWidget {
   @override
   State<Survey> createState() => _SurveyState();
 }
-
-const List<MCQ> que = [qn1, qn2, qn3];
 
 class _SurveyState extends State<Survey> {
   final PageController controller = PageController();
@@ -73,21 +75,46 @@ class _SurveyState extends State<Survey> {
                 child: const Text("skip"))
           ],
         ),
-        body: PageView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: controller,
-          itemBuilder: (context, index) {
-            if (index == que.length) {
-              return Result(correct: correct, incorrect: incorrect, skip: skip);
-            }
-            return Questions(
-              qn: que.elementAt(index),
-              right: right,
-              wrong: wrong,
-              controller: controller,
-            );
-          },
-        ),
+        body: StreamBuilder(
+            stream: Fetch().fetchSurveyQuestions(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: LinearProgressIndicator(),
+                );
+              }
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Image.asset("assets/icons/1.png"),
+                );
+              }
+              Map<String, dynamic> jsonQuestions =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              print(jsonQuestions.length);
+              List<MCQ> que = jsonQuestions.values
+                  .map((e) => MCQ.fromMap(e.cast()))
+                  .toList();
+              return PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: controller,
+                itemCount: jsonQuestions.length,
+                itemBuilder: (context, index) {
+                  if (index == jsonQuestions.length) {
+                    return Result(
+                      correct: correct,
+                      incorrect: incorrect,
+                      skip: skip,
+                    );
+                  }
+                  return Questions(
+                    qn: que.elementAt(index),
+                    right: right,
+                    wrong: wrong,
+                    controller: controller,
+                  );
+                },
+              );
+            }),
       ),
     );
   }

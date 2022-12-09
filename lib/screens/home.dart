@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/constants/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/screens/feedback.dart';
-import 'package:quiz/screens/load.dart';
 import 'package:quiz/screens/survey.dart';
-import 'feedback.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -51,19 +48,16 @@ class Home extends StatelessWidget {
                   const kard(
                     txt: "Survey",
                     kolor: blueGradient,
-                    where: Survey(),
                   ),
                   const SizedBox(height: 50),
                   const kard(
                     txt: "Quiz",
                     kolor: orangeGradient,
-                    where: Survey(),
                   ),
                   const SizedBox(height: 50),
                   const kard(
                     txt: "Feedback",
                     kolor: purpleGradient,
-                    where: FeedbackScreen(),
                   ),
                 ],
               ),
@@ -105,9 +99,7 @@ class Home extends StatelessWidget {
 class kard extends StatelessWidget {
   final List<Color> kolor;
   final String txt;
-  final Widget where;
-  const kard(
-      {Key? key, required this.txt, required this.kolor, required this.where})
+  const kard({Key? key, required this.txt, required this.kolor})
       : super(key: key);
 
   @override
@@ -126,7 +118,7 @@ class kard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => where,
+                builder: (context) => const Survey(),
               ),
             );
           },
