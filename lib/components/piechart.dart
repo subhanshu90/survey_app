@@ -13,32 +13,27 @@ class Result extends StatelessWidget {
     final int correct = Provider.of<PointsCountProvider>(context).correct;
     final int incorrect = Provider.of<PointsCountProvider>(context).incorrect;
     final int skip = Provider.of<PointsCountProvider>(context).skip;
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Scaffold(
-          body: Column(
-            children: [
-              Text.rich(
-                TextSpan(
-                    text: "Your Score is ",
-                    style: GoogleFonts.poppins(
-                        textStyle: text(29, FontWeight.bold, Colors.black)),
-                    children: [
-                      TextSpan(
-                          text: '${correct - incorrect}',
-                          style: GoogleFonts.poppins(
-                              textStyle:
-                                  text(30, FontWeight.w700, Colors.blue)))
-                    ]),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              Chart(correct: correct, incorrect: incorrect, skip: skip),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text.rich(
+            TextSpan(
+                text: "Your Score is ",
+                style: GoogleFonts.poppins(
+                    textStyle: text(29, FontWeight.bold, Colors.black)),
+                children: [
+                  TextSpan(
+                      text: '${correct - incorrect}',
+                      style: GoogleFonts.poppins(
+                          textStyle: text(30, FontWeight.w700, Colors.blue)))
+                ]),
           ),
-        ),
+          const SizedBox(
+            height: 100,
+          ),
+          Chart(correct: correct, incorrect: incorrect, skip: skip),
+        ],
       ),
     );
   }

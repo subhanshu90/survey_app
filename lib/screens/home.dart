@@ -4,8 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:quiz/constants/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/screens/feedback.dart';
+import 'package:quiz/screens/login.dart';
+import 'package:quiz/screens/quiz.dart';
 import 'package:quiz/screens/survey.dart';
 import 'package:quiz/services/auth.dart';
+import 'package:email_otp/email_otp.dart';
+
+EmailOTP myauth = EmailOTP();
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -14,100 +19,92 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            TextButton(
-              onPressed: () =>
-                  Provider.of<AuthServiceProvider>(context).signOut(),
-              child: const Icon(Icons.logout),
-            )
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Stack(children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.person))
-                    ],
-                  ),
-                  RichText(
-                    text: TextSpan(
-                        text: "Hello,",
-                        style: GoogleFonts.pacifico(
-                          textStyle: text(30, FontWeight.w500, Colors.black),
-                        ),
-                        children: [
-                          TextSpan(
-                              text: userName,
-                              style: GoogleFonts.pacifico(
-                                  textStyle:
-                                      text(30, FontWeight.w600, Colors.red)))
-                        ]),
-                  ),
-                  Text(
-                    "choose your destiny",
-                    style: GoogleFonts.lato(
-                        textStyle: text(15, FontWeight.normal, Colors.black)),
-                  ),
-                  const SizedBox(height: 25),
-                  const kard(
-                    txt: "Survey",
-                    kolor: blueGradient,
-                    destination: Survey(),
-                  ),
-                  const SizedBox(height: 50),
-                  const kard(
-                    txt: "Quiz",
-                    kolor: orangeGradient,
-                    destination: Survey(),
-                  ),
-                  const SizedBox(height: 50),
-                  const kard(
-                    txt: "Feedback",
-                    kolor: purpleGradient,
-                    destination: FeedbackScreen(),
-                  ),
-                ],
+        title: RichText(
+          text: TextSpan(
+              text: "Hello,",
+              style: GoogleFonts.pacifico(
+                textStyle: text(40, FontWeight.w500, Colors.black),
               ),
-              Positioned(
-                top: 100,
-                right: 25,
-                child: Image.asset(
-                  "assets/icons/survey.png",
-                  height: 100,
-                  width: 100,
+              children: [
+                TextSpan(
+                    text: userName,
+                    style: GoogleFonts.pacifico(
+                        textStyle: text(40, FontWeight.w600, Colors.red)))
+              ]),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                Provider.of<AuthServiceProvider>(context, listen: false)
+                    .signOut();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
+              },
+              icon: const Icon(Icons.logout))
+        ],
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Stack(children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                SizedBox(height: 75),
+                kard(
+                  txt: "Survey",
+                  kolor: blueGradient,
+                  destination: Survey(),
                 ),
+                SizedBox(height: 50),
+                kard(
+                  txt: "Quiz",
+                  kolor: orangeGradient,
+                  destination: Quizz(),
+                ),
+                SizedBox(height: 50),
+                kard(
+                  txt: "Feedback",
+                  kolor: purpleGradient,
+                  destination: FeedbackScreen(),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 100,
+              right: 25,
+              child: Image.asset(
+                "assets/icons/survey.png",
+                height: 100,
+                width: 100,
               ),
-              Positioned(
-                top: 300,
-                right: 25,
-                child: Image.asset(
-                  "assets/icons/quiz.png",
-                  height: 100,
-                  width: 100,
-                ),
+            ),
+            Positioned(
+              top: 300,
+              right: 25,
+              child: Image.asset(
+                "assets/icons/quiz.png",
+                height: 100,
+                width: 100,
               ),
-              Positioned(
-                top: 500,
-                right: 25,
-                child: Image.asset(
-                  "assets/icons/feedback.png",
-                  height: 100,
-                  width: 100,
-                ),
-              )
-            ]),
-          ),
+            ),
+            Positioned(
+              top: 500,
+              right: 25,
+              child: Image.asset(
+                "assets/icons/feedback.png",
+                height: 100,
+                width: 100,
+              ),
+            )
+          ]),
         ),
       ),
     );

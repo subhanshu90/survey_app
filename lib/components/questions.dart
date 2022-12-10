@@ -67,9 +67,11 @@ class _QuestionsState extends State<Questions> {
               if (selectedIndex < 0) return;
               bool status = widget.qn.validate(selectedIndex);
               if (status) {
-                Provider.of<PointsCountProvider>(context).right();
+                Provider.of<PointsCountProvider>(context, listen: false)
+                    .nailedit();
               } else {
-                Provider.of<PointsCountProvider>(context).wrong();
+                Provider.of<PointsCountProvider>(context, listen: false)
+                    .wronged();
               }
 
               widget.controller.nextPage(
@@ -79,6 +81,93 @@ class _QuestionsState extends State<Questions> {
             },
             buttonIcon: const Icon(Icons.navigate_next),
             buttonLable: const Text("Validate"),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          BigButtonWithIcon(
+            onPressed: () {
+              Provider.of<PointsCountProvider>(context, listen: false).jumped();
+              widget.controller.nextPage(
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+              );
+            },
+            buttonIcon: const Icon(Icons.navigate_next),
+            buttonLable: const Text("Skip"),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class Questions2 extends StatefulWidget {
+  final MCQ2 qn;
+
+  final PageController controller;
+  const Questions2({
+    super.key,
+    required this.qn,
+    required this.controller,
+  });
+
+  @override
+  State<Questions2> createState() => _Questions2State();
+}
+
+class _Questions2State extends State<Questions2> {
+  int selectedIndex = -1;
+
+  void setSelected(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Text(
+                    widget.qn.question,
+                    style: GoogleFonts.mukta(
+                        fontSize: 22, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.qn.options.length,
+                  itemBuilder: (BuildContext context, int index) => Kard2(
+                    txt: widget.qn.options.elementAt(index),
+                    kolor: purpleGradient,
+                    index: index,
+                    selectedIndex: selectedIndex,
+                    setSelected: setSelected,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          BigButtonWithIcon(
+            onPressed: () {
+              Provider.of<PointsCountProvider>(context, listen: false).jumped();
+              widget.controller.nextPage(
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+              );
+            },
+            buttonIcon: const Icon(Icons.navigate_next),
+            buttonLable: const Text("Next"),
           )
         ],
       ),

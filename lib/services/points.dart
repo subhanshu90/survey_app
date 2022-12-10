@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PointsCountProvider extends ChangeNotifier {
-  int _skipped = 0, _correct = 0, _incorrect = 0;
-  int get skip => _skipped;
-  int get correct => _correct;
-  int get incorrect => _incorrect;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final User _user = FirebaseAuth.instance.currentUser!;
+  int skipped = 0, right = 0, notcorrect = 0;
+  int get skip => skipped;
+  int get correct => right;
+  int get incorrect => notcorrect;
 
-  void right() {
-    _correct++;
+  set skip(int skipped) {}
+
+  void nailedit() {
+    right++;
     notifyListeners();
   }
 
-  void wrong() {
-    _incorrect++;
+  void wronged() {
+    notcorrect++;
     notifyListeners();
   }
 
   void jumped() {
-    _skipped++;
+    skipped++;
     notifyListeners();
+  }
+
+  Future setQuizScore() async {
+    _db.collection('QuizData').doc(_user.uid).set({
+      DateTime.now().toLocal().toString(): {
+        'correct': right,
+        'incorrect': notcorrect,
+        'skipped': skipped
+      },
+    }, SetOptions(merge: true));
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/mcqs.dart';
+
+import 'package:quiz/screens/home.dart';
 import 'package:quiz/services/fetch.dart';
 
 import '../components/button.dart';
@@ -28,7 +31,7 @@ class _FeedbackState extends State<FeedbackScreen> {
     return Scaffold(
         appBar: AppBar(),
         body: StreamBuilder(
-            stream: Fetch().fetchSurveyQuestions(),
+            stream: Fetch().feedbackQuestions(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -42,20 +45,18 @@ class _FeedbackState extends State<FeedbackScreen> {
               }
               Map<String, dynamic> jsonQuestions =
                   snapshot.data!.data() as Map<String, dynamic>;
-              List<MCQ> que =
-                  jsonQuestions.values.map((e) => MCQ.fromMap(e)).toList();
-              print(que);
+              List<String> que = jsonQuestions.values
+                  .map((e) => e['question'].toString())
+                  .toList();
               return PageView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _controller,
                   itemBuilder: (context, index) {
                     if (index == que.length) {
-                      return Container(
-                        child: Text("${skore / que.length}"),
-                      );
+                      return ThankYou(context, "feedback");
                     }
                     return ReviewItems(
-                      ques: que.elementAt(index),
+                      question: que.elementAt(index),
                       controller: _controller,
                     );
                   });
@@ -63,10 +64,53 @@ class _FeedbackState extends State<FeedbackScreen> {
   }
 }
 
+// ignore: non_constant_identifier_names
+Widget ThankYou(BuildContext context, String bruh) {
+  return Column(
+    mainAxisSize: MainAxisSize.max,
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Image.asset("assets/icons/5.png"),
+      const SizedBox(
+        height: 50,
+      ),
+      Text(
+        "Thank You!",
+        style: GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      Text(
+        "We appreciate your $bruh!",
+        style: GoogleFonts.poppins(
+          fontSize: 18,
+        ),
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      TextButton(
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: ((context) => Home())),
+                (route) => false);
+          },
+          child: const Text(
+            "Go To Home",
+            style: TextStyle(fontSize: 18),
+          ))
+    ],
+  );
+}
+
 class ReviewItems extends StatefulWidget {
-  final MCQ ques;
+  final String question;
   final PageController controller;
-  const ReviewItems({super.key, required this.ques, required this.controller});
+  const ReviewItems(
+      {super.key, required this.question, required this.controller});
 
   @override
   State<ReviewItems> createState() => _ReviewItemsState();
@@ -88,7 +132,7 @@ class _ReviewItemsState extends State<ReviewItems> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            widget.ques.question,
+            widget.question,
             style: TextStyle(fontSize: 25),
           ),
           const SizedBox(

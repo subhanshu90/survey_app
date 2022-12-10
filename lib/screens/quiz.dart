@@ -5,10 +5,22 @@ import 'package:quiz/components/piechart.dart';
 import 'package:quiz/services/fetch.dart';
 import 'package:quiz/services/points.dart';
 import '../components/questions.dart';
-import 'feedback.dart';
 
-class Survey extends StatelessWidget {
-  const Survey({super.key});
+class Quizz extends StatefulWidget {
+  const Quizz({super.key});
+
+  @override
+  State<Quizz> createState() => _QuizzState();
+}
+
+class _QuizzState extends State<Quizz> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<PointsCountProvider>(context, listen: false).incorrect = 0;
+    Provider.of<PointsCountProvider>(context, listen: false).skip = 0;
+    Provider.of<PointsCountProvider>(context, listen: false).correct = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +28,7 @@ class Survey extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: StreamBuilder(
-          stream: Fetch().fetchSurveyQuestions(),
+          stream: Fetch().fetchQuizQuestons(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -30,16 +42,19 @@ class Survey extends StatelessWidget {
             }
             Map<String, dynamic> jsonQuestions =
                 snapshot.data!.data() as Map<String, dynamic>;
-            List<MCQ2> que =
-                jsonQuestions.values.map((e) => MCQ2.fromMap(e)).toList();
+            List<MCQ> que =
+                jsonQuestions.values.map((e) => MCQ.fromMap(e)).toList();
+
             return PageView.builder(
               physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               itemBuilder: (context, index) {
                 if (index == que.length) {
-                  return ThankYou(context, "survey");
+                  Provider.of<PointsCountProvider>(context, listen: false)
+                      .setQuizScore();
+                  return const Result();
                 }
-                return Questions2(
+                return Questions(
                   qn: que.elementAt(index),
                   controller: controller,
                 );

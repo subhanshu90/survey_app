@@ -21,3 +21,15 @@ class MCQ {
     );
   }
 }
+
+class MCQ2 {
+  final String question;
+  final List<String> options;
+  const MCQ2({required this.question, required this.options});
+
+  factory MCQ2.fromMap(Map qn) {
+    List<dynamic> op = qn['options'];
+    List<String> option = op.cast<String>();
+    return MCQ2(options: option, question: qn['question']);
+  }
+}

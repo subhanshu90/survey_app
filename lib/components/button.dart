@@ -28,3 +28,29 @@ class BigButtonWithIcon extends StatelessWidget {
     );
   }
 }
+
+class BigButton extends StatelessWidget {
+  final Function onPressed;
+  final Widget buttonChild;
+  const BigButton({
+    Key? key,
+    required this.onPressed,
+    required this.buttonChild,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: ElevatedButton(
+        onPressed: () => onPressed(),
+        child: buttonChild,
+        style: ElevatedButton.styleFrom(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          minimumSize: const Size(double.infinity, 50),
+        ),
+      ),
+    );
+  }
+}

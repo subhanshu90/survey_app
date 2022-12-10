@@ -9,4 +9,18 @@ class Fetch {
         .doc('SurveyQuestions')
         .snapshots();
   }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> fetchQuizQuestons() {
+    return _firestore
+        .collection('questionsCollection')
+        .doc('QuizQuestions')
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> feedbackQuestions() {
+    return _firestore
+        .collection('questionsCollection')
+        .doc('FeedbackQuestions')
+        .snapshots();
+  }
 }

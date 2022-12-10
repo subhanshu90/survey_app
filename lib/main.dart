@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/screens/login.dart';
+import 'package:quiz/screens/signup.dart';
 import 'package:quiz/services/auth.dart';
 import 'package:quiz/services/points.dart';
 import 'screens/home.dart';
