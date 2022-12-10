@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz/components/button.dart';
 import 'package:quiz/constants/constants.dart';
+import 'package:quiz/services/points.dart';
 import 'mcqs.dart';
 
 class Questions extends StatefulWidget {
   final MCQ qn;
-  final Function right;
-  final Function wrong;
+
   final PageController controller;
   const Questions({
     super.key,
     required this.qn,
-    required this.right,
-    required this.wrong,
     required this.controller,
   });
 
@@ -68,9 +67,9 @@ class _QuestionsState extends State<Questions> {
               if (selectedIndex < 0) return;
               bool status = widget.qn.validate(selectedIndex);
               if (status) {
-                widget.right();
+                Provider.of<PointsCountProvider>(context).right();
               } else {
-                widget.wrong();
+                Provider.of<PointsCountProvider>(context).wrong();
               }
 
               widget.controller.nextPage(

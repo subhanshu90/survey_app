@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:quiz/components/mcqs.dart';
-import 'package:quiz/screens/survey.dart';
+import 'package:quiz/services/fetch.dart';
 
 import '../components/button.dart';
 
@@ -27,19 +27,38 @@ class _FeedbackState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: PageView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _controller,
-            itemBuilder: (context, index) {
-              if (index == que.length) {
-                return Container(
-                  child: Text("${skore / que.length}"),
+        body: StreamBuilder(
+            stream: Fetch().fetchSurveyQuestions(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: LinearProgressIndicator(),
                 );
               }
-              return ReviewItems(
-                ques: que.elementAt(index),
-                controller: _controller,
-              );
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Image.asset("assets/icons/1.png"),
+                );
+              }
+              Map<String, dynamic> jsonQuestions =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              List<MCQ> que =
+                  jsonQuestions.values.map((e) => MCQ.fromMap(e)).toList();
+              print(que);
+              return PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  itemBuilder: (context, index) {
+                    if (index == que.length) {
+                      return Container(
+                        child: Text("${skore / que.length}"),
+                      );
+                    }
+                    return ReviewItems(
+                      ques: que.elementAt(index),
+                      controller: _controller,
+                    );
+                  });
             }));
   }
 }
@@ -47,7 +66,7 @@ class _FeedbackState extends State<FeedbackScreen> {
 class ReviewItems extends StatefulWidget {
   final MCQ ques;
   final PageController controller;
-  ReviewItems({super.key, required this.ques, required this.controller});
+  const ReviewItems({super.key, required this.ques, required this.controller});
 
   @override
   State<ReviewItems> createState() => _ReviewItemsState();

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz/screens/login.dart';
+import 'package:quiz/services/auth.dart';
+import 'package:quiz/services/points.dart';
 import 'screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -8,7 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(Myapp());
+  runApp(const Myapp());
 }
 
 class Myapp extends StatelessWidget {
@@ -16,11 +20,17 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          colorSchemeSeed: Colors.deepPurple[200], useMaterial3: true),
-      debugShowCheckedModeBanner: false,
-      home: Home(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthServiceProvider()),
+        ChangeNotifierProvider(create: (context) => PointsCountProvider()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+            colorSchemeSeed: Colors.deepPurple[200], useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        home: const LoginScreen(),
+      ),
     );
   }
 }
