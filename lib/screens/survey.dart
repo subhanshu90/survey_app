@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/components/mcqs.dart';
 import 'package:quiz/components/piechart.dart';
-import 'package:quiz/services/fetch.dart';
-import 'package:quiz/services/points.dart';
 import '../components/questions.dart';
 
 class Survey extends StatelessWidget {
@@ -27,34 +26,23 @@ class Survey extends StatelessWidget {
                 child: const Text("skip"))
           ],
         ),
-        body: StreamBuilder(
-            stream: Fetch().fetchSurveyQuestions(),
+        body: StreamBuilder<DocumentSnapshot>(
+            stream: Fetch().surveyQuestions(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: LinearProgressIndicator(),
-                );
-              }
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Image.asset("assets/icons/1.png"),
-                );
-              }
-              Map<String, dynamic> jsonQuestions =
-                  snapshot.data!.data() as Map<String, dynamic>;
-              List<MCQ> que =
-                  jsonQuestions.values.map((e) => MCQ.fromMap(e)).toList();
-              print(que);
               return PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: controller,
                 itemBuilder: (context, index) {
-                  print(index);
+                  if (snapshot.hasData) print(snapshot);
+
                   if (index == que.length) {
-                    return const Result();
+                    return Result(
+                        correct: correct, incorrect: incorrect, skip: skip);
                   }
                   return Questions(
                     qn: que.elementAt(index),
+                    right: right,
+                    wrong: wrong,
                     controller: controller,
                   );
                 },
