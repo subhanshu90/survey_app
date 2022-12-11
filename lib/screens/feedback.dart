@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/components/mcqs.dart';
-
+import 'package:provider/provider.dart';
 import 'package:quiz/screens/home.dart';
 import 'package:quiz/services/fetch.dart';
-
+import 'package:quiz/services/store.dart';
 import '../components/button.dart';
 
 Map<double, String> emotes = {
@@ -15,7 +14,6 @@ Map<double, String> emotes = {
   4.0: "assets/icons/4.png",
   5.0: "assets/icons/5.png"
 };
-double skore = 0;
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
@@ -53,7 +51,8 @@ class _FeedbackState extends State<FeedbackScreen> {
                   controller: _controller,
                   itemBuilder: (context, index) {
                     if (index == que.length) {
-                      return ThankYou(context, "feedback");
+                      Provider.of<DataBaseProvider>(context).setFeedbackAns();
+                      return ThankYou(context, "We appreciate your feedback");
                     }
                     return ReviewItems(
                       question: que.elementAt(index),
@@ -66,43 +65,46 @@ class _FeedbackState extends State<FeedbackScreen> {
 
 // ignore: non_constant_identifier_names
 Widget ThankYou(BuildContext context, String bruh) {
-  return Column(
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Image.asset("assets/icons/5.png"),
-      const SizedBox(
-        height: 50,
-      ),
-      Text(
-        "Thank You!",
-        style: GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      Text(
-        "We appreciate your $bruh!",
-        style: GoogleFonts.poppins(
-          fontSize: 18,
+  return SingleChildScrollView(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Image.asset("assets/icons/5.png"),
+        const SizedBox(
+          height: 50,
         ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      TextButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: ((context) => Home())),
-                (route) => false);
-          },
-          child: const Text(
-            "Go To Home",
-            style: TextStyle(fontSize: 18),
-          ))
-    ],
+        Text(
+          "Thank You!",
+          style: GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          bruh,
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        SizedBox(
+          height: 100,
+        ),
+        BigButtonWithIcon(
+            buttonIcon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: ((context) => Home())),
+                  (route) => false);
+            },
+            buttonLable:
+                const Text("Go To Home", style: TextStyle(fontSize: 24)))
+      ],
+    ),
   );
 }
 
@@ -133,7 +135,7 @@ class _ReviewItemsState extends State<ReviewItems> {
         children: [
           Text(
             widget.question,
-            style: TextStyle(fontSize: 25),
+            style: const TextStyle(fontSize: 25),
           ),
           const SizedBox(
             height: 50,
@@ -161,7 +163,8 @@ class _ReviewItemsState extends State<ReviewItems> {
           ),
           BigButtonWithIcon(
             onPressed: () {
-              skore += rating;
+              Provider.of<DataBaseProvider>(context, listen: false)
+                  .feedbaccAdd(rating, widget.question);
               widget.controller.nextPage(
                 duration: const Duration(seconds: 1),
                 curve: Curves.fastLinearToSlowEaseIn,

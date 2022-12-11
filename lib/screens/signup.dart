@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/components/input.dart';
-import 'package:quiz/screens/home.dart';
 import 'package:quiz/screens/login.dart';
 import 'package:quiz/services/auth.dart';
 

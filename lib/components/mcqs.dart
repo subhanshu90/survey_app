@@ -24,12 +24,23 @@ class MCQ {
 
 class MCQ2 {
   final String question;
-  final List<String> options;
-  const MCQ2({required this.question, required this.options});
+
+  const MCQ2({
+    required this.question,
+  });
 
   factory MCQ2.fromMap(Map qn) {
-    List<dynamic> op = qn['options'];
-    List<String> option = op.cast<String>();
-    return MCQ2(options: option, question: qn['question']);
+    return MCQ2(question: qn['question']);
   }
 }
+
+// class QUET {
+//   final String question;
+//   final String timestmp;
+
+//   const QUET({required this.question, required this.timestmp});
+
+//   factory QUET.fromMap(Map qn) {
+//     return QUET(timestmp: qn.keys.first, question: qn.values['question']);
+//   }
+// }

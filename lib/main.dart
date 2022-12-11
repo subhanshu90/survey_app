@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz/screens/admeme.dart';
 import 'package:quiz/screens/login.dart';
-import 'package:quiz/screens/signup.dart';
 import 'package:quiz/services/auth.dart';
 import 'package:quiz/services/points.dart';
-import 'screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quiz/services/store.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,6 +25,7 @@ class Myapp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthServiceProvider()),
         ChangeNotifierProvider(create: (context) => PointsCountProvider()),
+        ChangeNotifierProvider(create: (context) => DataBaseProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

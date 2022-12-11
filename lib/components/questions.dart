@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quiz/components/button.dart';
 import 'package:quiz/constants/constants.dart';
 import 'package:quiz/services/points.dart';
+import 'package:quiz/services/store.dart';
 import 'mcqs.dart';
 
 class Questions extends StatefulWidget {
@@ -125,6 +126,7 @@ class _Questions2State extends State<Questions2> {
     });
   }
 
+  final TextEditingController _surveyans = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -144,15 +146,22 @@ class _Questions2State extends State<Questions2> {
                         fontSize: 22, fontWeight: FontWeight.w500),
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.qn.options.length,
-                  itemBuilder: (BuildContext context, int index) => Kard2(
-                    txt: widget.qn.options.elementAt(index),
-                    kolor: purpleGradient,
-                    index: index,
-                    selectedIndex: selectedIndex,
-                    setSelected: setSelected,
+                SizedBox(
+                  height: 39,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    maxLines: 6,
+                    textInputAction: TextInputAction.done,
+                    controller: _surveyans,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 226, 226),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        )),
                   ),
                 ),
               ],
@@ -160,7 +169,9 @@ class _Questions2State extends State<Questions2> {
           ),
           BigButtonWithIcon(
             onPressed: () {
-              Provider.of<PointsCountProvider>(context, listen: false).jumped();
+              Provider.of<DataBaseProvider>(context, listen: false)
+                  .addAns(_surveyans.text, widget.qn.question);
+
               widget.controller.nextPage(
                 duration: const Duration(seconds: 1),
                 curve: Curves.easeOut,

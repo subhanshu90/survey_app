@@ -13,17 +13,20 @@ class BigButtonWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: () => onPressed(),
-      icon: buttonIcon,
-      label: buttonLable,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF4e8eff),
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        minimumSize: const Size(double.infinity, 50),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton.icon(
+        onPressed: () => onPressed(),
+        icon: buttonIcon,
+        label: buttonLable,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF4e8eff),
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          minimumSize: const Size(double.infinity, 50),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+        ),
       ),
     );
   }
@@ -44,12 +47,12 @@ class BigButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ElevatedButton(
         onPressed: () => onPressed(),
-        child: buttonChild,
         style: ElevatedButton.styleFrom(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5))),
           minimumSize: const Size(double.infinity, 50),
         ),
+        child: buttonChild,
       ),
     );
   }

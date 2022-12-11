@@ -5,6 +5,8 @@ import 'package:quiz/constants/constants.dart';
 import 'package:quiz/services/points.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../screens/home.dart';
+
 class Result extends StatelessWidget {
   const Result({super.key});
 
@@ -33,6 +35,20 @@ class Result extends StatelessWidget {
             height: 100,
           ),
           Chart(correct: correct, incorrect: incorrect, skip: skip),
+          SizedBox(
+            height: 100,
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: ((context) => Home())),
+                    (route) => false);
+              },
+              child: const Text(
+                "Go To Home",
+                style: TextStyle(fontSize: 18),
+              ))
         ],
       ),
     );

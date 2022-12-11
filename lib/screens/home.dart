@@ -22,19 +22,6 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: RichText(
-          text: TextSpan(
-              text: "Hello,",
-              style: GoogleFonts.pacifico(
-                textStyle: text(40, FontWeight.w500, Colors.black),
-              ),
-              children: [
-                TextSpan(
-                    text: userName,
-                    style: GoogleFonts.pacifico(
-                        textStyle: text(40, FontWeight.w600, Colors.red)))
-              ]),
-        ),
         actions: [
           IconButton(
               onPressed: () async {
@@ -56,21 +43,35 @@ class Home extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 75),
-                kard(
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: "Hello,",
+                      style: GoogleFonts.pacifico(
+                        textStyle: text(40, FontWeight.w500, Colors.black),
+                      ),
+                      children: [
+                        TextSpan(
+                            text: userName,
+                            style: GoogleFonts.pacifico(
+                                textStyle:
+                                    text(40, FontWeight.w600, Colors.red)))
+                      ]),
+                ),
+                const SizedBox(height: 75),
+                const kard(
                   txt: "Survey",
                   kolor: blueGradient,
                   destination: Survey(),
                 ),
-                SizedBox(height: 50),
-                kard(
+                const SizedBox(height: 50),
+                const kard(
                   txt: "Quiz",
                   kolor: orangeGradient,
                   destination: Quizz(),
                 ),
-                SizedBox(height: 50),
-                kard(
+                const SizedBox(height: 50),
+                const kard(
                   txt: "Feedback",
                   kolor: purpleGradient,
                   destination: FeedbackScreen(),
@@ -96,7 +97,7 @@ class Home extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 500,
+              top: 515,
               right: 25,
               child: Image.asset(
                 "assets/icons/feedback.png",
@@ -111,6 +112,7 @@ class Home extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class kard extends StatelessWidget {
   final List<Color> kolor;
   final String txt;

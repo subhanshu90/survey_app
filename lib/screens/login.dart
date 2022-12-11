@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/components/button.dart';
+import 'package:quiz/screens/admeme.dart';
 import 'package:quiz/screens/home.dart';
 import 'package:quiz/screens/signup.dart';
 import 'package:quiz/services/auth.dart';
@@ -74,6 +75,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     try {
                       if (_key.currentState!.validate()) {
+                        if (email.text.trim() == "admin@app.com") {
+                          if (password.text.trim() != "strongpass@123") {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: const Text("wrong password")),
+                            );
+                            return;
+                          }
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (builder) => const Admeme()),
+                              (Route<dynamic> route) => false);
+                          return;
+                        }
                         final AuthServiceProvider provider =
                             Provider.of<AuthServiceProvider>(context,
                                 listen: false);
@@ -107,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialPageRoute(
                               builder: (context) => const SignUpScreen()));
                     },
-                    buttonChild: const Text("Sign Up"))
+                    buttonChild: const Text("Sign Up")),
               ])),
         ),
       ),
