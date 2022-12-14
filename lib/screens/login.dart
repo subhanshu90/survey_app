@@ -19,12 +19,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _key = GlobalKey();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-
+  bool _isHidden=true;
   @override
   void dispose() {
     email.dispose();
     password.dispose();
     super.dispose();
+  }
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 
   @override
@@ -65,6 +70,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: const InputDecoration(
                       label: Text("Password"),
                       prefixIcon: Icon(Icons.lock),
+                      suffix: Inkwell(onTap: _togglePasswordView,
+                        child: Icon(_isHidden
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
                     ),
                   ),
                 ),
