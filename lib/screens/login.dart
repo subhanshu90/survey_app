@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: password,
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,
-                    obscureText: true,
+                    obscureText: _isHidden,
                     decoration: const InputDecoration(
                       label: Text("Password"),
                       prefixIcon: Icon(Icons.lock),
